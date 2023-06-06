@@ -1,0 +1,9 @@
+{
+  "server": true,
+  "bind_addr": "{{ GetInterfaceIP \"eth0\" }}",
+  "bootstrap_expect": 3,
+  "data_dir": "/tmp",
+  "retry_join": ["consulserver03", "consulserver04"],
+  "node_name": "consulserver02",
+  "encrypt": "oNvfMG+OCX0wiGmASw662MW8rQes85+LcrkDrTUFHgo="
+}
