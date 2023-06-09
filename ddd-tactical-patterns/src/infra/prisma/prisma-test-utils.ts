@@ -1,4 +1,7 @@
 import { prisma } from "./client";
+import { PrismockClient } from "prismock";
+
+type PrismockClientType = typeof PrismockClient;
 
 export function clearPrismaDb() {
   const keysToIgnore = new Set([
@@ -6,12 +9,19 @@ export function clearPrismaDb() {
     "getData",
   ]);
 
-  const keys = Object.keys(prisma).filter(key => !keysToIgnore.has(key))
+  const keys: string[] = [];
 
-  const newData = keys.reduce((acc, key) => {
-    acc[key] = [];
-    return acc;
-  }, {} as { [key: string]: any[] });
+  for (const key in prisma) {
+    if (keysToIgnore.has(key)) continue;
 
-  (prisma as any).setData(newData);
+    keys.push(key);
+  }
+
+  const emptyData: { [key: string]: any[] } = {};
+
+  for (const key of keys) {
+    emptyData[key] = [];
+  }
+
+  (prisma as unknown as PrismockClientType).setData(emptyData);
 }
