@@ -28,7 +28,7 @@
     "uuid": "^9.0.0"
   },
   "prisma": {
-    "schema": "src/infra/prisma/schema.prisma"
+    "schema": "src/infra/@shared/prisma/schema.prisma"
   },
   "resolutions": {
     "string-width": "4.2.3"

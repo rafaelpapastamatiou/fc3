@@ -139,7 +139,7 @@ export default {
   // setupFiles: [],
 
   // A list of paths to modules that run some code to configure or set up the testing framework before each test
-  setupFilesAfterEnv: ['<rootDir>/src/infra/prisma/setup-prisma-mock.ts'],
+  setupFilesAfterEnv: ['<rootDir>/src/infra/@shared/prisma/setup-prisma-mock.ts'],
 
   // The number of seconds after which a test is considered as slow and reported as such in the results.
   // slowTestThreshold: 5,

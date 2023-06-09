@@ -1,7 +1,8 @@
-import { Customer } from "./domain/entities/customer";
-import { Order } from "./domain/entities/order";
-import { OrderItem } from "./domain/entities/order-item";
-import { Address } from "./domain/valueObjects/address";
+import { Address } from "./domain/@shared/valueObjects/address";
+import { Order } from "./domain/checkout/entities/order";
+import { OrderItem } from "./domain/checkout/entities/order-item";
+import { Customer } from "./domain/customers/entities/customer";
+
 
 const customer = new Customer({
   id: '1',
