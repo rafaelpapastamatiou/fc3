@@ -17,7 +17,7 @@
     "typescript": "^5.1.3"
   },
   "scripts": {
-    "test": "npm run tsc:check && NODE_ENV=test jest",
+    "test": "npm run tsc:check && npm rum prisma:gen && NODE_ENV=test jest",
     "tsc:check": "npm run tsc -- --noEmit",
     "tsc": "tsc",
     "prisma:gen": "npx prisma format && npx prisma generate"
