@@ -8,7 +8,7 @@ type CustomerProps = {
   address?: Address;
 }
 
-type CustomerConstructorProps = Omit<CustomerProps, "active" | "rewardPoints">;
+export type CustomerConstructorProps = Omit<CustomerProps, "active" | "rewardPoints">;
 
 export class Customer {
   private props: CustomerProps;

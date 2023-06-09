@@ -5,6 +5,8 @@ type AddressProps = {
   zip: string;
 }
 
+export type AddressConstructorProps = AddressProps;
+
 export class Address {
   private props: AddressProps;
 

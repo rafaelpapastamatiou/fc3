@@ -1,21 +1,6 @@
-export type ProductProps = {
-  id: string;
-  name: string;
-  price: number;
-};
+import { ProductInterface, ProductProps } from "./product";
 
-export type ProductConstructorProps = ProductProps;
-
-export interface ProductInterface {
-  get id(): string;
-  get name(): string;
-  get price(): number;
-  validate(): boolean;
-  changeName(name: string): void;
-  changePrice(price: number): void;
-}
-
-export class Product implements ProductInterface {
+export class ProductB implements ProductInterface {
   private props: ProductProps;
 
   constructor({ id, name, price }: ProductProps) {

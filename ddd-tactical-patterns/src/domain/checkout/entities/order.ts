@@ -6,6 +6,8 @@ type OrderProps = {
   items: OrderItem[];
 }
 
+export type OrderConstructorProps = OrderProps;
+
 export class Order {
   private props: OrderProps;
 
