@@ -96,6 +96,39 @@ describe("E2E tests for customer routes", () => {
     expect(response.body.customers[1].address.number).toBe(123);
     expect(response.body.customers[1].address.city).toBe("São Paulo");
     expect(response.body.customers[1].address.zip).toBe("23456-234");
+
+    const xmlResponse = await request(app)
+      .get("/customers")
+      .set("Accept", "application/xml");
+
+    const regExp = /[\n\r\s\t]/g;
+
+    expect(xmlResponse.status).toBe(200);
+    expect(xmlResponse.text).toContain("<?xml version=\"1.0\" encoding=\"UTF-8\"?>")
+    expect(xmlResponse.text.replace(regExp, "")).toContain(`<?xml version="1.0" encoding="UTF-8"?>
+      <customers>
+        <customer>
+          <id>${response.body.customers[0].id}</id>
+          <name>John Doe</name>
+          <address>
+            <street>Rua 1</street>
+            <number>123</number>
+            <city>São Paulo</city>
+            <zip>12345-123</zip>
+          </address>
+        </customer>
+        <customer>
+          <id>${response.body.customers[1].id}</id>
+          <name>Jane Doe</name>
+          <address>
+            <street>Rua 2</street>
+            <number>123</number>
+            <city>São Paulo</city>
+            <zip>23456-234</zip>
+          </address>
+        </customer>
+      </customers>
+    `.replace(regExp, ""));
   });
 
 });

@@ -3,6 +3,7 @@ import { PrismaCustomersRepository } from "../repositories/prisma-customers-repo
 import { CreateCustomerUseCase } from "../../../usecases/customers/create/create-customer.usecase";
 import { CreateCustomerInputDTO } from "../../../usecases/customers/create/create-customer.dto";
 import { ListCustomersUseCase } from "../../../usecases/customers/list/list-customers.usecase";
+import { ListCustomersPresenter } from "./presenters/list-customers.presenter";
 
 export const customerRoutes = Router();
 
@@ -36,7 +37,10 @@ customerRoutes.get("/", async (req, res) => {
   try {
     const output = await listCustomersUsecase.execute({});
 
-    return res.status(200).json(output);
+    return res.status(200).format({
+      json: () => res.json(output),
+      xml: () => res.send(ListCustomersPresenter.toXML(output)),
+    });
   } catch (err) {
     return res.status(500).send(err);
   }
