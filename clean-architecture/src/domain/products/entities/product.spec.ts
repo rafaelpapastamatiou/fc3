@@ -9,7 +9,7 @@ describe("Product unit tests", () => {
         name: "Product 1",
         price: 100,
       });
-    }).toThrowError("Id cannot be empty");
+    }).toThrowError("Product: Id cannot be empty");
   });
 
   it("should throw an error when name is empty", () => {
@@ -19,7 +19,7 @@ describe("Product unit tests", () => {
         name: "",
         price: 100,
       });
-    }).toThrowError("Name cannot be empty");
+    }).toThrowError("Product: Name cannot be empty");
   });
 
   it("should throw an error when price is less than or equal to zero", () => {
@@ -29,7 +29,7 @@ describe("Product unit tests", () => {
         name: "Product 1",
         price: 0,
       });
-    }).toThrowError("Price must be greater than zero");
+    }).toThrowError("Product: Price must be greater than zero");
   });
 
   it("should change name", () => {
@@ -53,7 +53,7 @@ describe("Product unit tests", () => {
 
     expect(() => {
       product.changeName("");
-    }).toThrowError("Name cannot be empty");
+    }).toThrowError("Product: Name cannot be empty");
   });
 
   it("should change price", () => {
@@ -77,6 +77,6 @@ describe("Product unit tests", () => {
 
     expect(() => {
       product.changePrice(0);
-    }).toThrowError("Price must be greater than zero");
+    }).toThrowError("Product: Price must be greater than zero");
   });
 });

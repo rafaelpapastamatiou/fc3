@@ -1,21 +1,26 @@
+import { Entity } from "../../@shared/entities/entity";
+import { NotificationError } from "../../@shared/notifications/notification.error";
 import { Address } from "../../@shared/valueObjects/address";
 
 type CustomerProps = {
-  id: string;
   name: string;
   active: boolean;
   rewardPoints: number;
   address?: Address;
 }
 
-export type CustomerConstructorProps = Omit<CustomerProps, "active" | "rewardPoints">;
+export type CustomerConstructorProps =
+  Omit<CustomerProps, "active" | "rewardPoints"> & {
+    id: string;
+  }
 
-export class Customer {
+export class Customer extends Entity {
   private props: CustomerProps;
 
   constructor({ id, name, address }: CustomerConstructorProps) {
+    super(id);
+
     this.props = {
-      id,
       name,
       address,
       active: false,
@@ -25,16 +30,36 @@ export class Customer {
     this.validate();
   }
 
-  get id() { return this.props.id; }
   get name() { return this.props.name; }
   get address() { return this.props.address; }
   get isActive() { return this.props.active; }
   get rewardPoints() { return this.props.rewardPoints; }
 
   validate(): boolean {
-    if (!this.id) { throw new Error("Id cannot be empty"); }
-    if (!this.name) { throw new Error("Name cannot be empty"); }
-    if (this.rewardPoints < 0) { throw new Error("Reward points cannot be negative"); }
+    if (!this.id) {
+      this.notification.addError({
+        context: "Customer",
+        message: "ID cannot be empty",
+      });
+    }
+
+    if (!this.name) {
+      this.notification.addError({
+        context: "Customer",
+        message: "Name cannot be empty",
+      });
+    }
+
+    if (this.rewardPoints < 0) {
+      this.notification.addError({
+        context: "Customer",
+        message: "Reward points cannot be negative",
+      });
+    }
+
+    if (this.notification.hasErrors()) {
+      throw new NotificationError(this.notification.errors);
+    }
 
     return true;
   }

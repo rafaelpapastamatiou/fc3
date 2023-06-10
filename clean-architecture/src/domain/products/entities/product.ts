@@ -1,26 +1,22 @@
+import { Entity } from "../../@shared/entities/entity";
+import { NotificationError } from "../../@shared/notifications/notification.error";
+
 export type ProductProps = {
-  id: string;
   name: string;
   price: number;
 };
 
-export type ProductConstructorProps = ProductProps;
+export type ProductConstructorProps = ProductProps & {
+  id: string;
+};
 
-export interface ProductInterface {
-  get id(): string;
-  get name(): string;
-  get price(): number;
-  validate(): boolean;
-  changeName(name: string): void;
-  changePrice(price: number): void;
-}
-
-export class Product implements ProductInterface {
+export class Product extends Entity {
   private props: ProductProps;
 
-  constructor({ id, name, price }: ProductProps) {
+  constructor({ id, name, price }: ProductConstructorProps) {
+    super(id);
+
     this.props = {
-      id,
       name,
       price,
     };
@@ -28,14 +24,34 @@ export class Product implements ProductInterface {
     this.validate();
   }
 
-  get id() { return this.props.id; }
   get name() { return this.props.name; }
   get price() { return this.props.price; }
 
   validate(): boolean {
-    if (!this.id) { throw new Error("Id cannot be empty"); }
-    if (!this.name) { throw new Error("Name cannot be empty"); }
-    if (this.price <= 0) { throw new Error("Price must be greater than zero"); }
+    if (!this.id) {
+      this.notification.addError({
+        context: "Product",
+        message: "Id cannot be empty",
+      });
+    }
+
+    if (!this.name) {
+      this.notification.addError({
+        context: "Product",
+        message: "Name cannot be empty",
+      });
+    }
+
+    if (this.price <= 0) {
+      this.notification.addError({
+        context: "Product",
+        message: "Price must be greater than zero",
+      });
+    }
+
+    if (this.notification.hasErrors()) {
+      throw new NotificationError(this.notification.errors);
+    }
 
     return true;
   }

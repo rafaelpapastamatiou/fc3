@@ -9,7 +9,7 @@ describe("Customer unit tests", () => {
         id: "",
         name: "John Doe",
       });
-    }).toThrowError("Id cannot be empty");
+    }).toThrowError("Customer: ID cannot be empty");
   });
 
   it("should throw an error when name is empty", () => {
@@ -18,8 +18,18 @@ describe("Customer unit tests", () => {
         id: "1",
         name: "",
       });
-    }).toThrowError("Name cannot be empty");
+    }).toThrowError("Customer: Name cannot be empty");
   });
+
+  it("should throw an error when both name and id are empty", () => {
+    expect(() => {
+      new Customer({
+        id: "",
+        name: "",
+      });
+    }).toThrowError("Customer: ID cannot be empty, Customer: Name cannot be empty");
+  });
+
 
   it("should change name", () => {
     const customer = new Customer({
@@ -40,7 +50,7 @@ describe("Customer unit tests", () => {
 
     expect(() => {
       customer.changeName("")
-    }).toThrowError("Name cannot be empty");
+    }).toThrowError("Customer: Name cannot be empty");
   });
 
   it("should activate customer", () => {
@@ -126,7 +136,7 @@ describe("Customer unit tests", () => {
 
     expect(() => {
       customer.addRewardPoints(-10);
-    }).toThrowError("Reward points cannot be negative");
+    }).toThrowError("Customer: Reward points cannot be negative");
   });
 
 });
