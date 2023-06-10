@@ -1,5 +1,6 @@
 import { Entity } from "../../@shared/entities/entity";
 import { NotificationError } from "../../@shared/notifications/notification.error";
+import { ProductValidatorFactory } from "../factories/product-validator.factory";
 
 export type ProductProps = {
   name: string;
@@ -28,26 +29,9 @@ export class Product extends Entity {
   get price() { return this.props.price; }
 
   validate(): boolean {
-    if (!this.id) {
-      this.notification.addError({
-        context: "Product",
-        message: "Id cannot be empty",
-      });
-    }
+    const validator = ProductValidatorFactory.create();
 
-    if (!this.name) {
-      this.notification.addError({
-        context: "Product",
-        message: "Name cannot be empty",
-      });
-    }
-
-    if (this.price <= 0) {
-      this.notification.addError({
-        context: "Product",
-        message: "Price must be greater than zero",
-      });
-    }
+    validator.validate(this);
 
     if (this.notification.hasErrors()) {
       throw new NotificationError(this.notification.errors);

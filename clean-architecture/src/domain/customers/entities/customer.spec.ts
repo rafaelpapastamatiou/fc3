@@ -9,7 +9,7 @@ describe("Customer unit tests", () => {
         id: "",
         name: "John Doe",
       });
-    }).toThrowError("Customer: ID cannot be empty");
+    }).toThrowError("Customer: Id cannot be empty");
   });
 
   it("should throw an error when name is empty", () => {
@@ -27,7 +27,7 @@ describe("Customer unit tests", () => {
         id: "",
         name: "",
       });
-    }).toThrowError("Customer: ID cannot be empty, Customer: Name cannot be empty");
+    }).toThrowError("Customer: Id cannot be empty, Customer: Name cannot be empty");
   });
 
 

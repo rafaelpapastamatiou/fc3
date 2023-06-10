@@ -1,6 +1,7 @@
 import { Entity } from "../../@shared/entities/entity";
 import { NotificationError } from "../../@shared/notifications/notification.error";
 import { Address } from "../../@shared/valueObjects/address";
+import { CustomerValidatorFactory } from "../factories/customer-validator.factory";
 
 type CustomerProps = {
   name: string;
@@ -36,26 +37,9 @@ export class Customer extends Entity {
   get rewardPoints() { return this.props.rewardPoints; }
 
   validate(): boolean {
-    if (!this.id) {
-      this.notification.addError({
-        context: "Customer",
-        message: "ID cannot be empty",
-      });
-    }
+    const validator = CustomerValidatorFactory.create();
 
-    if (!this.name) {
-      this.notification.addError({
-        context: "Customer",
-        message: "Name cannot be empty",
-      });
-    }
-
-    if (this.rewardPoints < 0) {
-      this.notification.addError({
-        context: "Customer",
-        message: "Reward points cannot be negative",
-      });
-    }
+    validator.validate(this);
 
     if (this.notification.hasErrors()) {
       throw new NotificationError(this.notification.errors);
